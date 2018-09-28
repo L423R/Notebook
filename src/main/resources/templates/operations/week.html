@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<div class="container" th:with="cur_date = ${#dates.createToday()}">
+    <div th:replace="fragments/header :: header"></div>
+
+       <!-- <table class="table table-bordered">
+            <thead>
+            <tr>
+                    <th class="info" th:each="date : ${week}" th:text="${#dates.format(date, 'EEE, d MMM yyyy')}" style="text-align: center; width: 14.28%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+                <td th:each="enty : ${notesMap}">
+                    <table class="table table-striped">
+                        <tr th:each="note : ${enty.value}">
+                            <td><a th:href="@{'/edit/{id}'(id=${note.id})}" th:text="${note.message}"></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>-->
+
+    <table class="table table-bordered" th:with="map=${notesMap}">
+        <thead>
+            <tr>
+                <th class="info"  th:each="date : ${map}" th:text="${#dates.format(date.key, 'EEE, d MMM yyyy')}" th:classappend="${date.key.date == cur_date.date} ? danger : active" style="text-align: center; width: 14.28%">
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+
+            <td th:each="enty : ${map}">
+                <table class="table table-striped">
+                    <tr th:each="note : ${enty.value}">
+                        <td th:classappend="${note.getDateEnd().date <= cur_date.date} ? mydanger"><a  style="color: #054cb3;" th:href="@{'/edit/{id}'(id=${note.id})}"  th:text="${note.message}"></a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

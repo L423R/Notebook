@@ -1,0 +1,19 @@
+.navbar-default {
+    background: #0c67b3;
+}
+
+.navbar-default .navbar-brand {
+    color: #ffe8c4;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+
+.mydanger {
+    background-color: #DD4242;
+}
+
+.mysuccess {
+    background-color: #da9e2e;
+}

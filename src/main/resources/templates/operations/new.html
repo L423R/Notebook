@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="container">
+        <form class="form-horizontal" th:action="@{/save}" name="input_form" id="input_form"
+              method="post" role="form">
+            <div class="form-group">
+                <label class="label" for="message" style="color: cornflowerblue">Message</label>
+                <input type="text" class="form-control" id="message" th:name="message" placeholder="Enter your note." maxlength="100"/>
+                <label class="label" for="datepickerStart" style="color: cornflowerblue" >Date</label>
+                <input id="datepickerStart" width="270" th:name="dateStart" />
+                <label class="label" for="datepickerEnd" style="color: cornflowerblue">Deadline</label>
+                <input id="datepickerEnd" width="270" th:name="dateEnd" />
+                <script>
+                    $('#datepickerStart').datepicker({
+                        uiLibrary: 'bootstrap'
+                    });
+
+                    $('#datepickerEnd').datepicker({
+                        uiLibrary: 'bootstrap'
+                    });
+                </script>
+            </div>
+            <button  type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="notebook">
+    <table class="table table-bordered table-hover horizontal-align" th:with="cur_date = ${#dates.createToday().date}, flag = false">
+        <thead>
+        <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 45%">Message</th>
+            <th class="dropdown" style="width: 15%">Date
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'ASC1')}"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'DESC1')}"><i class="glyphicon glyphicon-chevron-down"></i></a>
+            </th>
+            <th style="width: 15%">Deadline
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'ASC2')}"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'DESC2')}"><i class="glyphicon glyphicon-chevron-down"></i></a>
+            </th>
+            <th style="width: 10%">Done
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'ASC3')}"><i class="glyphicon glyphicon-minus"></i></a>
+                <a th:href="@{'/sort/{sortDate}' (sortDate = 'ASC4')}"><i class="glyphicon glyphicon-plus"></i></a>
+               <!-- <i class="glyphicon glyphicon-minus" style="font-size:20px;color:#337ab7"></i>
+                <i class="glyphicon glyphicon-plus" style="font-size:20px;color:#337ab7"></i>-->
+            </th>
+            <th style="width: 5%">Edit</th>
+            <th style="width: 5%">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note : ${notes}"  th:classappend="${note.getDateEnd().date == cur_date or note.getDateEnd().date< cur_date and note.done==false} ? mydanger : (${note.done==true} ? mysuccess)"  >
+            <td th:text="${note.id}" style="text-align: center">#</td>
+            <td th:text="${note.message}">Message</td>
+            <td th:text="${#dates.format(note.dateStart, 'EEE, d MMM yyyy')}" style="text-align: center">Date</td>
+            <td th:text="${#dates.format(note.dateEnd, 'EEE, d MMM yyyy')}" style="text-align: center">Deadline</td>
+            <td style="text-align: center">
+                <i th:if="${note.done} == true" class="glyphicon glyphicon-plus" style="font-size:20px;color:#337ab7"></i>
+                <i th:if="${note.done} == false" class="glyphicon glyphicon-minus" style="font-size:20px;color:#337ab7"></i>
+            </td>
+            <td style="text-align: center"><a th:href="@{'/edit/{id}'(id=${note.id})}"><i class="glyphicon glyphicon-edit" style="font-size:20px"></i></a></td>
+            <td style="text-align: center"><a th:href="@{'/delete/{id}'(id=${note.id})}"><i class="glyphicon glyphicon-remove" style="font-size:20px"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>
