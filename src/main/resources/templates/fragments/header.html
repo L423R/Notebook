@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <div class="container">
-        <div th:fragment="header">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" th:href="@{/}">Home</a>
-                        <ul class="nav navbar-nav">
-                            <li><a th:href="@{/new}">Create Note</a></li>
-                            <li><a th:href="@{/week}">My Week</a> </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-        </div>
+    <div class="" th:fragment="header">
+        <nav id="navbarNav" class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" th:href="@{/}">Home</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/new}">Create Note</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/week}">My Week</a></li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Sign Out"/>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
 </html>

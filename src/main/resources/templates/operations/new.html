@@ -2,33 +2,51 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head">
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/demo.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.fr-fr.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.ru-ru.js" type="text/javascript"></script>
 </head>
 <body>
 
 <div class="container">
     <div th:replace="fragments/header :: header"></div>
     <div class="container">
-        <form class="form-horizontal" th:action="@{/save}" name="input_form" id="input_form"
+        <form class="form-horizontal" th:action="@{/save}" th:object="${note}" name="input_form" id="input_form"
               method="post" role="form">
             <div class="form-group">
                 <label class="label" for="message" style="color: cornflowerblue">Message</label>
-                <input type="text" class="form-control" id="message" th:name="message" placeholder="Enter your note." maxlength="100"/>
+                <input type="text" class="form-control" id="message" th:field="*{message}" placeholder="Enter your note." maxlength="100"/>
+                <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}">MESSAGE MUST BE NOT BULL</label>
                 <label class="label" for="datepickerStart" style="color: cornflowerblue" >Date</label>
-                <input id="datepickerStart" width="270" th:name="dateStart" />
+                <input id="datepickerStart" width="270" th:field="*{dateStart}" />
+                <label th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">DATE MUST BE NOT BULL</label>
                 <label class="label" for="datepickerEnd" style="color: cornflowerblue">Deadline</label>
-                <input id="datepickerEnd" width="270" th:name="dateEnd" />
+
+                <input id="datepickerEnd" width="270" th:field="*{dateEnd}"  />
+                <label th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}">Deadline MUST BE NOT BULL</label>
+
                 <script>
                     $('#datepickerStart').datepicker({
-                        uiLibrary: 'bootstrap'
+                        locale:'ru-ru',
+                        weekStartDay: 1,
+                        uiLibrary: 'bootstrap4'
                     });
 
                     $('#datepickerEnd').datepicker({
-                        uiLibrary: 'bootstrap'
+                        locale:'ru-ru',
+                        weekStartDay: 1,
+                        uiLibrary: 'bootstrap4'
                     });
                 </script>
             </div>
             <button  type="submit" class="btn btn-primary">Submit</button>
         </form>
+
     </div>
 </div>
 

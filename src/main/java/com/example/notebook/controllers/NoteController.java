@@ -2,15 +2,22 @@ package com.example.notebook.controllers;
 
 import com.example.notebook.entities.Note;
 import com.example.notebook.services.NoteService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
 public class NoteController {
+
+    private static Logger logger = LoggerFactory.getLogger(NoteController.class);
 
     private NoteService service;
     private String sortDateChoose = "DESC1";
@@ -24,20 +31,26 @@ public class NoteController {
     public String index(Model model){
         List<Note> notes = filterAndSort();
         model.addAttribute("notes",notes);
+        logger.info("Эта запись будет залогирована");
         return "index";
     }
 
-    @PostMapping(path = "/save")
-    public String save(@RequestParam String message, @RequestParam(required = false) Date dateStart, @RequestParam(required = false) Date dateEnd){
+    @GetMapping(path = "/login")
+    public String login(){
+        return "login";
+    }
 
-        Note note = new Note(message);
-        if (dateStart!=null)
-            note.setDateStart(dateStart);
-        if (dateEnd!=null)
-            note.setDateEnd(dateEnd);
+    @GetMapping(path = "/403")
+    public String accessDenied(){
+        return "/error/403";
+    }
+
+    @PostMapping(path = "/save")
+    public String save(@Valid Note note, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "operations/new";
+        }
         service.saveNote(note);
-        System.out.println("DateStart: "+dateStart);
-        System.out.println("DateEnd:  "+dateEnd);
         return "redirect:/";
     }
 
@@ -62,7 +75,8 @@ public class NoteController {
     }
 
     @GetMapping("/new")
-    public String newNote(){
+    public String newNote(Model model){
+        model.addAttribute("note",new Note());
         return "operations/new";
     }
 
@@ -75,7 +89,6 @@ public class NoteController {
     @GetMapping("/week")
     public String notesInWeek(Model model){
 
-        /*model.addAttribute("week",getCurrentWeek());*/
         model.addAttribute("notesMap",getCurrNotes());
         return "operations/week";
     }

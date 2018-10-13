@@ -1,8 +1,10 @@
 package com.example.notebook.entities;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,15 +15,18 @@ public class Note {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
     @Column(name = "message")
     private String message;
     @Column(name = "date_start")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date dateStart;
     @Column(name = "done")
     private boolean done;
+    @NotNull
     @Column(name = "date_end")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateEnd;
 
     public Note() {

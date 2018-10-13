@@ -27,27 +27,27 @@
             </tr>
             </tbody>
         </table>-->
-
-    <table class="table table-bordered" th:with="map=${notesMap}">
-        <thead>
+    <div class="container" style="padding-top: 10px">
+        <table class="table table-bordered" th:with="map=${notesMap}">
+            <thead>
+                <tr>
+                    <th class="info"  th:each="date : ${map}" th:text="${#dates.format(date.key, 'EEE, d MMM yyyy')}" th:classappend="${date.key.date == cur_date.date} ? mydanger : active" style="text-align: center; width: 14.28%">
+                </tr>
+            </thead>
+            <tbody>
             <tr>
-                <th class="info"  th:each="date : ${map}" th:text="${#dates.format(date.key, 'EEE, d MMM yyyy')}" th:classappend="${date.key.date == cur_date.date} ? danger : active" style="text-align: center; width: 14.28%">
+
+                <td th:each="enty : ${map}">
+                    <table class="table table-striped">
+                        <tr th:each="note : ${enty.value}">
+                            <td th:classappend="${note.getDateEnd().date <= cur_date.date} ? mydanger" style="border-radius: 45px 45px 45px 45px"><a  style="color: #054cb3;" th:href="@{'/edit/{id}'(id=${note.id})}"  th:text="${note.message}"></a></td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-        <tr>
-
-            <td th:each="enty : ${map}">
-                <table class="table table-striped">
-                    <tr th:each="note : ${enty.value}">
-                        <td th:classappend="${note.getDateEnd().date <= cur_date.date} ? mydanger"><a  style="color: #054cb3;" th:href="@{'/edit/{id}'(id=${note.id})}"  th:text="${note.message}"></a></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

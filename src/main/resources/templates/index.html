@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head">
-</head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"></head>
 <body>
 
 <div class="container">
@@ -10,6 +10,7 @@
         <div th:replace="operations/list :: notebook"></div>
     </div>
     <div th:replace="fragments/footer :: footer"></div>
+    <i class="fa fa-camera-retro fa"></i>
 </div>
 
 </body>
